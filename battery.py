@@ -75,6 +75,7 @@ while running:
     #    voltage = 12.6
     #charging = False
 
+#fhdh
 
     draw_battery(voltage, charging)
 
