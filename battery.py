@@ -49,7 +49,7 @@ def draw_battery(voltage, charging):
 
 # Main loop
 running = True
-voltage = 12.6
+voltage = 12.6 #change voltage to read value fom sensor
 
 while running:
     screen.fill(BLACK)
@@ -75,7 +75,7 @@ while running:
     #    voltage = 12.6
     #charging = False
 
-#fhdh
+
 
     draw_battery(voltage, charging)
 

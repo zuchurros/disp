@@ -1,58 +1,43 @@
 import pygame
-import math
+from battvert_func_only import draw_vertical_bar
+from speedometer_func_only import draw_speed_bar
 
-# 1. Setup
-def init():
-    pygame.init()
-    screen = pygame.display.set_mode((480, 320))
-    pygame.display.set_caption("E-Kart Dashboard")
-    return screen
+pygame.init()
+WIDTH, HEIGHT = 480, 320
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("eKart Dashboard")
+clock = pygame.time.Clock()
+font = pygame.font.SysFont(None, 32)
 
-# 2. Draw speedometer
-def draw_speedometer(screen, speed):
-    # ... same code you already have for speedometer ...
-    pass
+# Values
+speed = 0
+battery = 0
+max_speed = 120
+max_batt = 12.6
+charging = True
 
-# 3. Draw battery
-def draw_battery(screen, voltage, charging):
-    # ... same code for battery bar/charging ...
-    pass
+running = True
+while running:
+    screen.fill((0, 0, 0))
 
-# 4. Optional: draw other stuff (RPM, lap time, etc.)
-def draw_rpm(screen, rpm):
-    # Example only
-    pass
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-# 5. Main loop
-def main():
-    screen = init()
-    clock = pygame.time.Clock()
-    running = True
+    # Simulate values
+    speed += 0.3
+    battery += 0.01
+    if speed > max_speed:
+        speed = 0
+    if battery > max_batt:
+        battery = 0
 
-    while running:
-        screen.fill((0, 0, 0))
+    # Draw bars
+    draw_speed_bar(screen, speed)
+    draw_vertical_bar(screen, 20, 50, 40, 200, battery, max_batt, "Battery")
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+    pygame.display.flip()
+    clock.tick(60)
 
-        # --- Simulate values for now ---
-        speed = 55.0  # replace with real value
-        voltage = 12.4  # replace with real value
-        charging = True  # replace with GPIO check later
-        rpm = 4000  # example
-
-        # --- Draw components ---
-        draw_speedometer(screen, speed)
-        draw_battery(screen, voltage, charging)
-        draw_rpm(screen, rpm)
-
-        pygame.display.flip()
-        clock.tick(30)
-
-    pygame.quit()
-
-# 6. Run it!
-if __name__ == "__main__":
-    main()
+pygame.quit()
 

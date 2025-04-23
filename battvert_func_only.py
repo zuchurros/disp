@@ -57,33 +57,3 @@ def draw_vertical_bar(screen, x, y, w, h, value, max_value, label):
     #screen.blit(value_text, (x - 10, y + h + 10))
     screen.blit(percent_text, (x , y + h + 10))
 
-
-# Main loop
-running = True
-value = max_value
-while running:
-    screen.fill((0, 0, 0))
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    # Simulate battery charging
-    # value += 0.01
-    # if value > max_value:
-    #     value = 0
-
-    # Simulate on usage
-    value -= 0.01
-    if value < 0:
-        value = 12.6
-
-    charging = True
-
-    draw_vertical_bar(screen, bar_x, bar_y, bar_width, bar_height, value, max_value, "Battery")
-
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
-
