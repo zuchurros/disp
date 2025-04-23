@@ -1,9 +1,11 @@
 import pygame
 from battvert_func_only import draw_vertical_bar
+# from edit import draw_speed_bar
 from speedometer_func_only import draw_speed_bar
+from settings import WIDTH
+from settings import HEIGHT
 
 pygame.init()
-WIDTH, HEIGHT = 480, 320
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("eKart Dashboard")
 clock = pygame.time.Clock()
@@ -34,7 +36,7 @@ while running:
 
     # Draw bars
     draw_speed_bar(screen, speed)
-    draw_vertical_bar(screen, 20, 50, 40, 200, battery, max_batt, "Battery")
+    draw_vertical_bar(screen, WIDTH - 60, 360, 50, 90, battery, max_batt, "")
 
     pygame.display.flip()
     clock.tick(60)

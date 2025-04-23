@@ -1,10 +1,11 @@
 import pygame
 import math
 import random
+from settings import WIDTH
+from settings import HEIGHT
 
 # Setup
 pygame.init()
-WIDTH, HEIGHT = 480, 320
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Speed Gauge")
 clock = pygame.time.Clock()
@@ -15,8 +16,8 @@ BLACK = (0, 0, 0)
 BAR_BG = (50, 50, 50)
 
 # Parameters
-bar_x, bar_y = 10, 120
-bar_width, bar_height = 460, 40
+bar_x, bar_y = 10, 60
+bar_width, bar_height = 780, 100
 max_speed = 120  # km/h
 
 
@@ -63,6 +64,9 @@ def draw_speed_bar(screen, speed):
     pygame.draw.rect(screen, color, (bar_x, bar_y, fill_width, bar_height), border_radius=10)
 
     # Text
-    font = pygame.font.Font("digital-7.ttf", 60)
-    text = font.render(f"{int(speed)} km/h", True, WHITE)
-    screen.blit(text, (bar_x + 145, bar_y - 50))
+    font = pygame.font.Font("digital-7.ttf", 400)
+    text = font.render(f"{int(speed)}", True, WHITE)
+    screen.blit(text, (10, 180))
+    font = pygame.font.Font("digital-7.ttf", 100)
+    text = font.render(f"km/h", True, WHITE)
+    screen.blit(text, (470, 400))

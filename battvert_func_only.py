@@ -1,17 +1,15 @@
 import pygame
+from settings import WIDTH
+from settings import HEIGHT
 
 pygame.init()
-WIDTH, HEIGHT = 480, 320
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Battery Bar Test")
 clock = pygame.time.Clock()
-font = pygame.font.SysFont(None, 32)
+font = pygame.font.SysFont(None, 30)
 
 # Bar config
-bar_x, bar_y = 60, 60
-bar_width, bar_height = 60, 200
-max_value = 12.6  # e.g. full voltage
-value = 0
+# max_value = 12.6
+# value = 0
 
 
 # Color gradient function
@@ -55,5 +53,5 @@ def draw_vertical_bar(screen, x, y, w, h, value, max_value, label):
     percent_text = font.render(f"{percent:.1f}%", True, (255, 255, 255))
     screen.blit(label_text, (x, y - 30))
     #screen.blit(value_text, (x - 10, y + h + 10))
-    screen.blit(percent_text, (x , y + h + 10))
+    screen.blit(percent_text, (x - 2, y + h + 10))
 
