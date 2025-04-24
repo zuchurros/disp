@@ -1,72 +1,72 @@
 import pygame
-import math
-import random
 from settings import WIDTH
 from settings import HEIGHT
 
-# Setup
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Speed Gauge")
 clock = pygame.time.Clock()
+font = pygame.font.SysFont(None, 30)
 
-# Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-BAR_BG = (50, 50, 50)
-
-# Parameters
-bar_x, bar_y = 10, 60
-bar_width, bar_height = 780, 100
-max_speed = 120  # km/h
+# Bar config
+# max_value = 12.6
+# value = 0
 
 
-# Function to map speed to angle
-def speed_to_angle(speed):
-    angle_range = 270  # 135° to -135° (clockwise)
-    angle = 135 - (speed / max_speed) * angle_range
-    return math.radians(angle)
+# Color gradient function
+def get_bar_color(value, max_value, charging):
+    ratio = value / max_value
 
-def get_bar_color(speed):
-    ratio = speed / max_speed
+    if not charging:
 
-    if ratio < 0.7:
-        # Green to Yellow
-        r = int(255 * (ratio / 0.7))
-        g = 255
-        b = 0
-    elif ratio < 0.9:
-        # Yellow zone (stay yellow)
-        r = 255
-        g = 255
-        b = 0
+        if ratio < 0.3:
+            # Green to Yellow
+            r = 255
+            g = 0
+            b = 0
+
+        elif ratio < 0.7:
+            # Yellow
+            r = 255
+            g = 255
+            b = 0
+
+        else:
+            # Yellow to red
+            r = 0
+            g = 255
+            b = 0
     else:
-        # Yellow to Red
-        r = 255
-        g = int(255 * ((1 - ratio) / 0.1))
+        r = 0
+        g = 255
         b = 0
-    return (r, g, b)
+
+    return r, g, b
 
 
-def draw_speed_bar(screen, speed):
-    # Clamp speed
-    speed = max(0, min(speed, max_speed))
 
-    # Calculate fill length
-    fill_width = int((speed / max_speed) * bar_width)
 
-    color = get_bar_color(speed)
+# Draw vertical bar
+def draw_vertical_bar(screen, x, y, w, h, value, max_value, label,charging,bolt):
+    fill_ratio = value / max_value
+    fill_height = int(h * fill_ratio)
+    color = get_bar_color(value, max_value, charging)
+    percent = fill_ratio * 100
+    bolt_img = bolt
 
-    # Background bar
-    pygame.draw.rect(screen, BAR_BG, (bar_x, bar_y, bar_width, bar_height), border_radius=10)
+    # Background
+    pygame.draw.rect(screen, (50, 50, 50), (x, y, w, h), border_radius=8)
 
-    # Fill bar
-    pygame.draw.rect(screen, color, (bar_x, bar_y, fill_width, bar_height), border_radius=10)
+    # Filled part (bottom up)
+    pygame.draw.rect(screen, color, (x, y + h - fill_height, w, fill_height), border_radius=8)
 
-    # Text
-    font = pygame.font.Font("digital-7.ttf", 400)
-    text = font.render(f"{int(speed)}", True, WHITE)
-    screen.blit(text, (10, 180))
-    font = pygame.font.Font("digital-7.ttf", 100)
-    text = font.render(f"km/h", True, WHITE)
-    screen.blit(text, (470, 400))
+    # Label & value , value and percent changeable
+    if charging:
+        screen.blit(bolt_img, (x - 5, y))
+
+    if font:
+        label_text = font.render(f"{label}", True, (255, 255, 255))
+        #value_text = font.render(f"{value:.2f}V", True, (255, 255, 255))
+        percent_text = font.render(f"{percent:.1f}%", True, (255, 255, 255))
+        screen.blit(label_text, (x, y - 30))
+        #screen.blit(value_text, (x - 10, y + h + 10))
+        screen.blit(percent_text, (x - 2, y + h + 10))

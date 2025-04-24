@@ -16,8 +16,8 @@ BLACK = (0, 0, 0)
 BAR_BG = (50, 50, 50)
 
 # Parameters
-bar_x, bar_y = 10, 60
-bar_width, bar_height = 780, 100
+bar_x, bar_y = 10, 10
+bar_width, bar_height = 780, 80
 max_speed = 120  # km/h
 
 
@@ -64,9 +64,9 @@ def draw_speed_bar(screen, speed):
     pygame.draw.rect(screen, color, (bar_x, bar_y, fill_width, bar_height), border_radius=10)
 
     # Text
-    font = pygame.font.Font("digital-7.ttf", 400)
+    font = pygame.font.Font("digital-7.ttf", 490)
     text = font.render(f"{int(speed)}", True, WHITE)
-    screen.blit(text, (10, 180))
-    font = pygame.font.Font("digital-7.ttf", 100)
+    screen.blit(text, (15, 100))
+    font = pygame.font.Font("digital-7.ttf", 70)
     text = font.render(f"km/h", True, WHITE)
-    screen.blit(text, (470, 400))
+    screen.blit(text, (560, 280))
