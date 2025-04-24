@@ -1,6 +1,6 @@
 import pygame
-# from battvert_func_only import draw_vertical_bar
-from edit import draw_vertical_bar
+from battvert_func_only import draw_vertical_bar
+# from edit import draw_vertical_bar
 from speedometer_func_only import draw_speed_bar
 from settings import WIDTH
 from settings import HEIGHT
